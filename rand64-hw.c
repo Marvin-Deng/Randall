@@ -44,15 +44,6 @@ unsigned long long hardware_rand64 (void)
   return x;
 }
 
-struct drand48_data drand_data;
-
-unsigned long long hardware_lrand48(void)
-{
-  long int result;
-  lrand48_r(&drand_data, &result);
-  return (unsigned long long)result;
-}
-
 /* Finalize the hardware rand64 implementation.  */
 void hardware_rand64_fini (void)
 {

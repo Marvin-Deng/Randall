@@ -32,6 +32,15 @@ unsigned long long software_rand64(void)
   return x;
 }
 
+struct drand48_data drand_data;
+
+unsigned long long software_lrand48(void)
+{
+  long int result;
+  lrand48_r(&drand_data, &result);
+  return (unsigned long long)result;
+}
+
 /* Finalize the software rand64 implementation.  */
 void software_rand64_fini(void)
 {

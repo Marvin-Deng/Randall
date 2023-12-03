@@ -56,7 +56,7 @@ int main(int argc, char **argv)
   {
     return 0;
   }
-
+  printf("Integer: %d\n", nbytes);
   void (*initialize)(void);
   unsigned long long (*rand64)(void);
   void (*finalize)(void);
@@ -84,7 +84,7 @@ int main(int argc, char **argv)
   else if (opts.input == LRAND)
   {
     initialize = hardware_rand64_init;
-    rand64 = hardware_lrand48;
+    rand64 = software_lrand48;
     finalize = hardware_rand64_fini;
   }
   else if (opts.input == SLASH_F)
