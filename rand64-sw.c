@@ -5,6 +5,7 @@
 /* Input stream containing random bytes.  */
 static FILE *urandstream;
 
+/* Initialize the software implentation on a file  */
 void initfile(char *file)
 {
   urandstream = fopen(file, "r");

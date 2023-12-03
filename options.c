@@ -9,7 +9,7 @@
 
 #include "options.h"
 
-bool isNumber(char *string)
+static bool isNumber(char *string)
 {
     if (*string == '\0')
     {
@@ -50,6 +50,11 @@ void readoptions(int argc, char **argv, struct options *opts)
             {
                 opts->input = SLASH_F;
                 opts->file = optarg;
+            }
+            else
+            {
+                fprintf(stderr, "Invalid input format");
+                exit(1);
             }
             opts->isvalid = true;
             break;
