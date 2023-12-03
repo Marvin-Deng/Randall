@@ -42,21 +42,24 @@ int main(int argc, char **argv)
   struct options opts;
   opts.input = NONE;
   opts.output = STDIO;
+  opts.nbytes = 0;
+  
   readoptions(argc, argv, &opts);
   long long nbytes = opts.nbytes;
 
   // Check if the input is valid
   if (!opts.isvalid)
   {
-    fprintf(stderr, "%s: usage: %s NBYTES\n", argv[0], argv[0]);
+    fprintf(stderr, "Invalid input");
     return 1;
   }
 
   if (nbytes == 0)
   {
+    fprintf(stderr, "Nbytes should be an integer greater than 0");
     return 0;
   }
-  printf("Integer: %d\n", nbytes);
+
   void (*initialize)(void);
   unsigned long long (*rand64)(void);
   void (*finalize)(void);
@@ -94,11 +97,6 @@ int main(int argc, char **argv)
     rand64 = software_rand64;
     finalize = software_rand64_fini;
   }
-  else
-  {
-    fprintf(stderr, "Invalid input\n");
-    return 1;
-  }
 
   initialize();
   int wordsize = sizeof rand64();
@@ -129,6 +127,10 @@ int main(int argc, char **argv)
   }
   else if (opts.output == N)
   {
+    if (opts.block_size == 0) {
+      fprintf(stderr, "Block size cannot be 0 \n");
+      return 1;
+    }
     unsigned int block = opts.block_size * 2;
     char *buffer = malloc(block);
     if (buffer == NULL)
