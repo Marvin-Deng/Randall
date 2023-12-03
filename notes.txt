@@ -40,4 +40,48 @@ N option
 - Added block_size field to the struct to hold the block size for the N option
 - In randall.c, I allocated a buffer, then populated the buffer with bytes of the random long longs from rand64()
 
+Preparing for submission
+- Updated makefile wiht additional files for submission
+
+Test runs on lnxsrv15
+
+Fast using /dev/urandom
+
+time dd if=/dev/urandom ibs=8192 obs=8192 count=16384 >/dev/null
+real    0m0.917s
+user    0m0.019s
+sys     0m0.890s
+
+time ./randall -i /dev/urandom 133562368 >/dev/null
+real    0m1.897s
+user    0m0.941s
+sys     0m0.929s
+
+time ./randall -i /dev/urandom 133562368 | cat >/dev/null
+real    0m2.007s
+user    0m1.009s
+sys     0m1.140s
+
+time ./randall -i /dev/urandom 133562368 >rand.data
+real    0m2.043s
+user    0m0.931s
+sys     0m1.040s
+
+Slow using /dev/random
+
+time ./randall 133562368 >/dev/null
+real    1m34.937s
+user    0m2.132s
+sys     1m7.126s
+
+time ./randall 133562368 | cat >/dev/null
+real    1m30.358s
+user    0m2.132s
+sys     1m7.119s
+
+time ./randall 133562368 >rand.data
+real    1m34.859s
+user    0m1.876s
+sys     1m7.024s
+
 

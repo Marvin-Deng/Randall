@@ -43,7 +43,7 @@ int main(int argc, char **argv)
   opts.input = NONE;
   opts.output = STDIO;
   opts.nbytes = 0;
-  
+
   readoptions(argc, argv, &opts);
   long long nbytes = opts.nbytes;
 
@@ -97,6 +97,11 @@ int main(int argc, char **argv)
     rand64 = software_rand64;
     finalize = software_rand64_fini;
   }
+  else
+  {
+    fprintf(stderr, "Invalid input format");
+    return 0;
+  }
 
   initialize();
   int wordsize = sizeof rand64();
@@ -127,7 +132,8 @@ int main(int argc, char **argv)
   }
   else if (opts.output == N)
   {
-    if (opts.block_size == 0) {
+    if (opts.block_size == 0)
+    {
       fprintf(stderr, "Block size cannot be 0 \n");
       return 1;
     }
