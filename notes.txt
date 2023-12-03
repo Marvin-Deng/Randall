@@ -3,4 +3,5 @@
 
 2. I then split the functions in randall.c into separate files, where each .c file had an associated header file. I then added the header files includes into randall.c
 - Moved the number of bytes checker into options.c
-- Moved all hardware functions were placed into rand64-hw.c, including cpuid and hardware functions for rand64
+- Moved all hardware functions, which were placed into rand64-hw.c, including cpuid and hardware functions for rand64
+- Moved all software functions, which were placed into rand64-sw.c
