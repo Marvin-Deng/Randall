@@ -47,7 +47,7 @@ then echo "P: Test -i and -o stdio on ./randall -o 10 100"; \
 else echo "F: Test -i and -o stdio on ./randall -o 10 100"; \
 fi
 
-# Error checks
+# Input error checks
 
 if [ "$(./randall 2> /dev/null; echo $?)" -eq 1 ]; \
 then echo "P: Return code is 1 for missing nbytes in ./randall"; \
@@ -70,6 +70,29 @@ else echo "F: Return code is not 1 for missing nbytes in ./randall -i /dev/rando
 fi
 
 if [ "$(./randall -i /FFFF 2> /dev/null; echo $?)" -eq 1 ]; \
-then echo "P: Return code is 1 for invalid path ./randall -i /FFFF"; \
-else echo "F: Return code is not 1 for invalid path ./randall -i /FFFF"; \
+then echo "P: Return code is 1 for invalid path in ./randall -i /FFFF"; \
+else echo "F: Return code is not 1 for invalid path in ./randall -i /FFFF"; \
 fi
+
+# Output error checks
+
+if [ "$(./randall -o 2> /dev/null; echo $?)" -eq 1 ]; \
+then echo "P: Return code is 1 for missing -o argument in ./randall -o"; \
+else echo "F: Return code is not 1 ffor missing -o argument in ./randall -o"; \
+fi
+
+if [ "$(./randall -o invalid_option 4 2> /dev/null; echo $?)" -eq 1 ]; \
+then echo "P: Return code is 1 for invalid output option in ./randall -o invalid_option 4"; \
+else echo "F: Return code is not 1 for invalid output option in ./randall -o invalid_option 4"; \
+fi
+
+if [ "$(./randall -o 5 2> /dev/null; echo $?)" -eq 1 ]; \
+then echo "P: Return code is 1 for missing 'nbytes' in ./randall -o 5"; \
+else echo "F: Return code is not 1 for missing 'nbytes' in ./randall -o 5"; \
+fi
+
+if [ "$(./randall -o stdio 2> /dev/null; echo $?)" -eq 1 ]; \
+then echo "P: Return code is 1 for missing 'nbytes' with stdio in ./randall -o stdio"; \
+else echo "F: Return code is not 1 for missing 'nbytes' with stdio ./randall -o  stdio"; \
+fi
+

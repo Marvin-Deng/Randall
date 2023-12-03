@@ -26,6 +26,15 @@ static bool isNumber(char *string)
     return true;
 }
 
+static void optargExits(char *optarg)
+{
+    if (optarg == NULL)
+    {
+        fprintf(stderr, "Error: Missing argument for option -i\n");
+        exit(1);
+    }
+}
+
 void readoptions(int argc, char **argv, struct options *opts)
 {
     opts->isvalid = false;
@@ -37,6 +46,8 @@ void readoptions(int argc, char **argv, struct options *opts)
         {
 
         case 'i':
+            optargExits(optarg);
+
             if (strcmp("rdrand", optarg) == 0)
             {
                 opts->input = RDRAND;
@@ -52,13 +63,15 @@ void readoptions(int argc, char **argv, struct options *opts)
             }
             else
             {
-                fprintf(stderr, "Error: Invalid input format. Expected rdrand, ldrand48_r, or a file path as arguments");
+                fprintf(stderr, "Error: Invalid input format. Expected rdrand, ldrand48_r, or a file path as arguments\n");
                 exit(1);
             }
             opts->isvalid = true;
             break;
 
         case 'o':
+            optargExits(optarg);
+
             if (isNumber(optarg))
             {
                 opts->output = N;
@@ -70,7 +83,7 @@ void readoptions(int argc, char **argv, struct options *opts)
             }
             else
             {
-                fprintf(stderr, "Error: Invalid output format. Expected a positve integer or stdio as arguments");
+                fprintf(stderr, "Error: Invalid output format. Expected a positve integer or stdio as arguments\n");
                 exit(1);
             }
             opts->isvalid = true;

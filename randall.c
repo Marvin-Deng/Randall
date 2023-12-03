@@ -49,7 +49,7 @@ int main(int argc, char **argv)
   // Check if the input is valid
   if (!opts.isvalid)
   {
-    fprintf(stderr, "Error: Invalid input");
+    fprintf(stderr, "Error: Invalid input \n");
     return 1;
   }
 
@@ -97,7 +97,7 @@ int main(int argc, char **argv)
   }
   else
   {
-    fprintf(stderr, "Error: Invalid input format");
+    fprintf(stderr, "Error: Invalid input format\n");
     return 1;
   }
 
@@ -132,14 +132,14 @@ int main(int argc, char **argv)
   {
     if (opts.block_size == 0)
     {
-      fprintf(stderr, "Error: Block size cannot be 0 \n");
+      fprintf(stderr, "Error: Block size cannot be 0\n");
       return 1;
     }
     unsigned int block = opts.block_size * 2;
     char *buffer = malloc(block);
     if (buffer == NULL)
     {
-      fprintf(stderr, "Error: Buffer cannot be NULL \n");
+      fprintf(stderr, "Error: Buffer cannot be NULL\n");
       return 1;
     }
     while (0 < nbytes)
