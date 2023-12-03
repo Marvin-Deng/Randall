@@ -16,3 +16,7 @@ if [ `./randall -i ldrand48_r 10 | wc -c` -eq 10 ]; \
 then echo "P: ldrand48_r test on ./randall -i ldrand48_r 10"; \
 else echo "F: ldrand48_r test on ./randall -i ldrand48_r 10"; \
 fi
+if [ `./randall -i /dev/random 30 | wc -c` -eq 30 ]; \
+then echo "P: /F test on /dev/random 30"; \
+else echo "F: /F test on /dev/random 30"; \
+fi

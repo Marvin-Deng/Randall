@@ -7,6 +7,7 @@ struct options {
     bool isvalid;
     long long nbytes;
     enum Input input;
+    char* file;
 };
 
 void readoptions(int argc, char **argv, struct options *opts);

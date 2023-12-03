@@ -28,6 +28,13 @@ void readoptions(int argc, char **argv, struct options *opts)
             {
                 opts->input = LRAND;
             }
+            else if ('/' == optarg[0])
+            {
+                opts->input = SLASH_F;
+                opts->file = optarg;
+            }
+            opts->isvalid = true;
+            break;
         }
     }
 

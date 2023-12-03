@@ -86,6 +86,18 @@ int main (int argc, char **argv)
     rand64 = hardware_lrand48;
     finalize = hardware_rand64_fini;
   }
+  else if (opts.input == SLASH_F)
+  {
+    initfile(opts.file);
+    initialize = software_rand64_init;
+    rand64 = software_rand64;
+    finalize = software_rand64_fini;
+  }
+  else
+  {
+    fprintf(stderr, "Input invalid\n");
+    return 1;
+  }
 
   initialize ();
   int wordsize = sizeof rand64 ();
