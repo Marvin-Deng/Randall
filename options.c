@@ -53,7 +53,7 @@ void readoptions(int argc, char **argv, struct options *opts)
             }
             else
             {
-                fprintf(stderr, "Invalid input format");
+                fprintf(stderr, "Error: Invalid input format. Expected rdrand, ldrand48_r, or a file path as arguments");
                 exit(1);
             }
             opts->isvalid = true;
@@ -71,7 +71,7 @@ void readoptions(int argc, char **argv, struct options *opts)
             }
             else
             {
-                fprintf(stderr, "Invalid output format");
+                fprintf(stderr, "Error: Invalid output format. Expeced a positve integer or stdio as arguments");
                 exit(1);
             }
             opts->isvalid = true;
@@ -79,10 +79,11 @@ void readoptions(int argc, char **argv, struct options *opts)
         }
     }
 
-    // Finished parsing line
+    // Input finsihed parsing wihtout reaching an nbytes value
     if (optind >= argc)
     {
-        return;
+        fprintf(stderr, "Error: Insufficient command-line arguments. Please include the required 'nbytes' value.\n");
+        exit(1);
     }
 
     // Gets the number of bytes at then end of the input

@@ -11,8 +11,8 @@ void initfile(char *file)
   urandstream = fopen(file, "r");
   if (!urandstream)
   {
-    fprintf(stderr, "Invalid file: %s\n", file);
-    abort();
+    fprintf(stderr, "Error: Invalid file path: %s\n", file);
+    exit(1);
   }
 }
 
