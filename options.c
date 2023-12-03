@@ -1,32 +1,42 @@
-#include "options.h"
-#include <cpuid.h>
 #include <errno.h>
-#include <immintrin.h>
-#include <limits.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <cpuid.h>
+#include <string.h>
 
-long long checkoptions(int argc, char **argv) {
-    /* Check arguments.  */
-  bool valid = false;
-  long long nbytes;
-  if (argc == 2) {
-      char *endptr;
-      errno = 0;
-      nbytes = strtoll (argv[1], &endptr, 10);
-      if (errno)
-	    perror (argv[1]);
-      else
-	valid = !*endptr && 0 <= nbytes;
-    }
-  if (!valid)
+#include "options.h"
+
+void readoptions(int argc, char **argv, struct options *opts)
+{
+    opts->isvalid = false;
+
+    // Parse options
+    int c;
+    while ((c = getopt(argc, argv, ":i:o:")) != -1)
     {
-      fprintf (stderr, "%s: usage: %s NBYTES\n", argv[0], argv[0]);
-      exit(1);
+        switch (c)
+        {
+
+        case 'i': // Option -i for input
+            if (strcmp("rdrand", optarg) == 0)
+            {
+                opts->input = RDRAND;
+            }
+        }
     }
-    /* If there's no work to do, don't worry about which library to use.  */
-  if (nbytes == 0)
-    exit(0);
-    return nbytes;
+
+    // Finished parsing line
+    if (optind >= argc)
+    {
+        return;
+    }
+
+    // Gets the number of bytes at then end of the input
+    opts->nbytes = atol(argv[optind]);
+    if (opts->nbytes >= 0)
+    {
+        opts->isvalid = true;
+    }
 }

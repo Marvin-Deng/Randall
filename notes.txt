@@ -1,8 +1,19 @@
 1. I made a testing script called test.sh which contains basic size checks for the input of the function. I can add more tests to this script later on.
-- The make file sets the permissions to the test script then runs it using make check
+- The makefile sets the permissions to the test script then runs it using make check. The script compiles all .c files in the directory
+
+randall: *.c
+	$(CC) $(CFLAGS) *.c -o $@
+
 
 2. I then split the functions in randall.c into separate files, where each .c file had an associated header file. I then added the header files includes into randall.c
 - Moved the number of bytes checker into options.c
 - Moved all hardware functions, which were placed into rand64-hw.c, including cpuid and hardware functions for rand64
 - Moved all software functions, which were placed into rand64-sw.c
 - Moved the output function writebytes into output.c
+
+4. I modified options.c to allow for arguent parsing. Used getopt to specify -i and -o options
+- Used optind to get the number of input bytes. The number of bytes is at the end of the input string, so element at argv after the parsing returns nbytes
+
+rrand 
+- Added rrand option to options.c and the struct
+- Added the option to randall.c which uses the normal rand64 randomization

@@ -36,30 +36,50 @@
 #include "output.h"
 
 /* Main program, which outputs N bytes of random data.  */
-int
-main (int argc, char **argv)
+int main (int argc, char **argv)
 {
-  long long nbytes = checkoptions(argc, argv);
+  struct options opts;
+  readoptions(argc, argv, &opts);
+  long long nbytes = opts.nbytes;
 
-  
+  // Check if the input is valid
+  if (!opts.isvalid)
+  {
+    fprintf(stderr, "%s: usage: %s NBYTES\n", argv[0], argv[0]);
+    return 1;
+  }
+
+  if (nbytes == 0)
+  {
+    return 0;
+  }
 
   /* Now that we know we have work to do, arrange to use the
      appropriate library.  */
   void (*initialize) (void);
   unsigned long long (*rand64) (void);
   void (*finalize) (void);
-  if (rdrand_supported ())
+
+  if (opts.input == NONE)
+  {
+    initialize = software_rand64_init;
+    rand64 = software_rand64;
+    finalize = software_rand64_fini;
+  }
+  else if (opts.input == RDRAND)
+  {
+    if (rdrand_supported())
     {
       initialize = hardware_rand64_init;
       rand64 = hardware_rand64;
       finalize = hardware_rand64_fini;
     }
-  else
+    else
     {
-      initialize = software_rand64_init;
-      rand64 = software_rand64;
-      finalize = software_rand64_fini;
+      fprintf(stderr, "rdrand is not available\n");
+      return 1;
     }
+  }
 
   initialize ();
   int wordsize = sizeof rand64 ();
