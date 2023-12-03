@@ -29,9 +29,8 @@ static bool isNumber(char *string)
 void readoptions(int argc, char **argv, struct options *opts)
 {
     opts->isvalid = false;
-
-    // Parse options
     int c;
+
     while ((c = getopt(argc, argv, ":i:o:")) != -1)
     {
         switch (c)
@@ -71,7 +70,7 @@ void readoptions(int argc, char **argv, struct options *opts)
             }
             else
             {
-                fprintf(stderr, "Error: Invalid output format. Expeced a positve integer or stdio as arguments");
+                fprintf(stderr, "Error: Invalid output format. Expected a positve integer or stdio as arguments");
                 exit(1);
             }
             opts->isvalid = true;

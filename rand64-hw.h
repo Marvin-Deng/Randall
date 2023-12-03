@@ -5,9 +5,9 @@
 
 struct cpuid;
 
-struct cpuid cpuid (unsigned int leaf, unsigned int subleaf);
+struct cpuid cpuid(unsigned int leaf, unsigned int subleaf);
 
-_Bool rdrand_supported (void);
+_Bool rdrand_supported(void);
 
 void hardware_rand64_init(void);
 

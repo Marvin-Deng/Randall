@@ -1,18 +1,29 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
-enum Input { NONE, RDRAND, LRAND, SLASH_F };
-enum Ouput { STDIO, N };
+enum Input
+{
+    NONE,
+    RDRAND,
+    LRAND,
+    SLASH_F
+};
+enum Ouput
+{
+    STDIO,
+    N
+};
 
-struct options {
+struct options
+{
     bool isvalid;
     long long nbytes;
     enum Input input;
-    char* file;
+    char *file;
     enum Ouput output;
     unsigned int block_size;
 };
 
 void readoptions(int argc, char **argv, struct options *opts);
 
-#endif 
+#endif
