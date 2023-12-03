@@ -80,6 +80,12 @@ int main (int argc, char **argv)
       return 1;
     }
   }
+  else if (opts.input == LRAND)
+  {
+    initialize = hardware_rand64_init;
+    rand64 = hardware_lrand48;
+    finalize = hardware_rand64_fini;
+  }
 
   initialize ();
   int wordsize = sizeof rand64 ();

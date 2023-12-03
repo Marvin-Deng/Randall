@@ -24,6 +24,10 @@ void readoptions(int argc, char **argv, struct options *opts)
             {
                 opts->input = RDRAND;
             }
+            else if (strcmp("ldrand48_r", optarg) == 0)
+            {
+                opts->input = LRAND;
+            }
         }
     }
 

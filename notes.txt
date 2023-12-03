@@ -13,7 +13,13 @@ randall: *.c
 
 4. I modified options.c to allow for arguent parsing. Used getopt to specify -i and -o options
 - Used optind to get the number of input bytes. The number of bytes is at the end of the input string, so element at argv after the parsing returns nbytes
+- Used a struct to keep track of the inputs and options
 
 rrand 
 - Added rrand option to options.c and the struct
 - Added the option to randall.c which uses the normal rand64 randomization
+
+lrand
+- Added lrand option to options.c and the struct
+- Added lrand randomization function to rand64-sw.c 
+- Added lrand option to randall.c to use the lrand randomization
