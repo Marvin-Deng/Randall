@@ -29,6 +29,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "options.h"
 #include "rand64-hw.h"
@@ -36,9 +37,11 @@
 #include "output.h"
 
 /* Main program, which outputs N bytes of random data.  */
-int main (int argc, char **argv)
+int main(int argc, char **argv)
 {
   struct options opts;
+  opts.input = NONE;
+  opts.output = STDIO;
   readoptions(argc, argv, &opts);
   long long nbytes = opts.nbytes;
 
@@ -54,11 +57,9 @@ int main (int argc, char **argv)
     return 0;
   }
 
-  /* Now that we know we have work to do, arrange to use the
-     appropriate library.  */
-  void (*initialize) (void);
-  unsigned long long (*rand64) (void);
-  void (*finalize) (void);
+  void (*initialize)(void);
+  unsigned long long (*rand64)(void);
+  void (*finalize)(void);
 
   if (opts.input == NONE)
   {
@@ -95,17 +96,17 @@ int main (int argc, char **argv)
   }
   else
   {
-    fprintf(stderr, "Input invalid\n");
+    fprintf(stderr, "Invalid input\n");
     return 1;
   }
 
-  initialize ();
-  int wordsize = sizeof rand64 ();
+  initialize();
+  int wordsize = sizeof rand64();
   int output_errno = 0;
 
   if (opts.output == STDIO)
   {
-    do
+    while (0 < nbytes)
     {
       unsigned long long x = rand64();
       int outbytes = nbytes < wordsize ? nbytes : wordsize;
@@ -115,7 +116,7 @@ int main (int argc, char **argv)
         break;
       }
       nbytes -= outbytes;
-    } while (0 < nbytes);
+    }
 
     if (fclose(stdout) != 0)
       output_errno = errno;
@@ -125,6 +126,32 @@ int main (int argc, char **argv)
       errno = output_errno;
       perror("output");
     }
+  }
+  else if (opts.output == N)
+  {
+    unsigned int block = opts.block_size * 2;
+    char *buffer = malloc(block);
+    if (buffer == NULL)
+    {
+      exit(EXIT_FAILURE);
+    }
+    while (0 < nbytes)
+    {
+      int curr_block = nbytes < block ? nbytes : block;
+      unsigned long long x;
+      for (int i = 0; i < curr_block; i += sizeof(x))
+      {
+        x = rand64();
+        for (size_t j = 0; j < sizeof(x); j++)
+        {
+          unsigned char byte = *((unsigned char *)&x + j);
+          buffer[i + j] = byte;
+        }
+      }
+      write(1, buffer, curr_block);
+      nbytes -= curr_block;
+    }
+    free(buffer);
   }
 
   finalize();

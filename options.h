@@ -10,6 +10,7 @@ struct options {
     enum Input input;
     char* file;
     enum Ouput output;
+    unsigned int block_size;
 };
 
 void readoptions(int argc, char **argv, struct options *opts);

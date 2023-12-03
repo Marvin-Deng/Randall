@@ -20,3 +20,11 @@ if [ `./randall -i /dev/random 30 | wc -c` -eq 30 ]; \
 then echo "P: /F test on /dev/random 30"; \
 else echo "F: /F test on /dev/random 30"; \
 fi
+if [ `./randall -o stdio 30 | wc -c` -eq 30 ]; \
+then echo "P: Test -o stdio on ./randall -o stdio 30"; \
+else echo "F: Test -o stdio on ./randall -o stdio 30"; \
+fi
+if [ `./randall -o 10 100 | wc -c` -eq 100 ]; \
+then echo "P: Test -o N on ./randall -o 10 100"; \
+else echo "F: Test -o N on ./randall -o 10 100"; \
+fi
