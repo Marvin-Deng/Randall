@@ -103,28 +103,30 @@ int main (int argc, char **argv)
   int wordsize = sizeof rand64 ();
   int output_errno = 0;
 
-  do
+  if (opts.output == STDIO)
+  {
+    do
     {
-      unsigned long long x = rand64 ();
+      unsigned long long x = rand64();
       int outbytes = nbytes < wordsize ? nbytes : wordsize;
-      if (!writebytes (x, outbytes))
-	{
-	  output_errno = errno;
-	  break;
-	}
+      if (!writebytes(x, outbytes))
+      {
+        output_errno = errno;
+        break;
+      }
       nbytes -= outbytes;
-    }
-  while (0 < nbytes);
+    } while (0 < nbytes);
 
-  if (fclose (stdout) != 0)
-    output_errno = errno;
+    if (fclose(stdout) != 0)
+      output_errno = errno;
 
-  if (output_errno)
+    if (output_errno)
     {
       errno = output_errno;
-      perror ("output");
+      perror("output");
     }
+  }
 
-  finalize ();
+  finalize();
   return !!output_errno;
 }

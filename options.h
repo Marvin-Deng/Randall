@@ -2,12 +2,14 @@
 #define OPTIONS_H
 
 enum Input { NONE, RDRAND, LRAND, SLASH_F };
+enum Ouput { STDIO, N };
 
 struct options {
     bool isvalid;
     long long nbytes;
     enum Input input;
     char* file;
+    enum Ouput output;
 };
 
 void readoptions(int argc, char **argv, struct options *opts);

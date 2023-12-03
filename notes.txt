@@ -27,3 +27,7 @@ lrand
 - In options.c, added a source path to the struct when a / is encountered
 - Added a new init function into the software file which opens the file given a path
 - In the main file, I handled it by intializing the file, and using dev/random as the default if no file was present
+
+5. Added the -o option to options.c
+- Added output field to options struct
+- Added the default std.io option

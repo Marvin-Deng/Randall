@@ -35,9 +35,21 @@ void readoptions(int argc, char **argv, struct options *opts)
             }
             opts->isvalid = true;
             break;
+
+        case 'o': // Option -o for output
+            if (strcmp("stdio", optarg) == 0)
+            {
+                opts->output = STDIO;
+                opts->isvalid = true;
+            } 
+            else {
+                fprintf(stderr, "Invalid output format");
+                exit(1);
+            }
+            break;
         }
     }
-
+  
     // Finished parsing line
     if (optind >= argc)
     {
