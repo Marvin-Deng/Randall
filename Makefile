@@ -35,12 +35,13 @@ randall: *.c
 
 assignment: randall-assignment.$(TAREXT)
 assignment-files = COPYING Makefile randall.c
+additional-files = notes.txt options.c options.h output.c output.h \
+				   rand64-hw.c rand64-hw.h rand64-sw.c rand64-sw.h test.sh
 randall-assignment.$(TAREXT): $(assignment-files)
 	$(TAR) $(TARFLAGS) -cf $@ $(assignment-files)
 
 submission-tarball: randall-submission.$(TAREXT)
-submission-files = $(assignment-files) \
-  notes.txt # More files should be listed here, as needed.
+submission-files = $(assignment-files) $(additional-files)
 randall-submission.$(TAREXT): $(submission-files)
 	$(TAR) $(TARFLAGS) -cf $@ $(submission-files)
 
