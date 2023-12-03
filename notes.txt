@@ -1,1 +1,4 @@
 1. I first made the make checks test in the makefile, where I would allow the user to enter the number of bytes of random output, then checked to see if the bytes generated matched the number specified
+
+2. I then split the functions in randall.c into separate files, where each .c file had an associated header file. I then added the header files includes into randall.c
+- Moved the number of bytes checker into options.c
