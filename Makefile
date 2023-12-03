@@ -47,6 +47,10 @@ randall-submission.$(TAREXT): $(submission-files)
 repository-tarball:
 	$(TAR) -czf randall-git.tgz .git
 
+check: randall test.sh
+	chmod 755 test.sh
+	./test.sh
+
 .PHONY: default clean assignment submission-tarball repository-tarball
 
 clean:
