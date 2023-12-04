@@ -81,10 +81,18 @@ void readoptions(int argc, char **argv, struct options *opts)
             }
             opts->isvalid = true;
             break;
+        
+        case ':':
+            fprintf (stderr, "Error: Option -%c requires an operand\n", optopt);
+            exit(1);
+
+        case '?':
+            fprintf (stderr, "Error: Invalid option: '-%c'\n", optopt);
+            exit(1);
         }
     }
 
-    // Input finsihed parsing wihtout reaching an nbytes value
+    // Input finsihed parsing without reaching an nbytes value
     if (optind >= argc)
     {
         fprintf(stderr, "Error: Insufficient command-line arguments. Please include the required 'nbytes' value.\n");

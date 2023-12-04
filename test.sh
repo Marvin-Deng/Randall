@@ -54,6 +54,16 @@ then echo "P: Return code is 1 for missing nbytes in ./randall"; \
 else echo "F: Return code is not 1 for missing nbytes in ./randall"; \
 fi
 
+if [ "$(./randall -dsfs 3 2> /dev/null; echo $?)" -eq 1 ]; \
+then echo "P: Return code is 1 for invalid option in ./randall -dsfs"; \
+else echo "F: Return code is not 1 for invalid option in ./randall -dsfs"; \
+fi
+
+if [ "$(./randall -i 2> /dev/null; echo $?)" -eq 1 ]; \
+then echo "P: Return code is 1 for missing operand in ./randall -i"; \
+else echo "F: Return code is not 1 for missign operand in ./randall -i"; \
+fi
+
 if [ "$(./randall -i invalid_input_option 4 2> /dev/null; echo $?)" -eq 1 ]; \
 then echo "P: Return code is 1 for ./randall -i invalid_input_option 4"; \
 else echo "F: Return code is not 1 for ./randall -i invalid_input_option 4"; \
