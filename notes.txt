@@ -30,15 +30,15 @@ lrand
 
 5. Added the -o option to options.c
 - Added output field to options struct
+- Refactored the entire output logic into options.c by making a function which takes opt's properties and rand64() as parameters
 
 Stdio
 - Added the default stdio option to options.c for the output
-- Added 
 
 N option
 - Added a function called isNumber to verify the input is a number 
 - Added block_size field to the struct to hold the block size for the N option
-- In randall.c, I allocated a buffer, then populated the buffer with bytes of the random long longs from rand64()
+- I allocated a buffer, then populated the buffer with bytes of the random long longs from rand64()
 
 Preparing for submission
 - Updated makefile wiht additional files for submission
@@ -67,7 +67,7 @@ real    0m2.043s
 user    0m0.931s
 sys     0m1.040s
 
-Slow using /dev/random
+Slow using /dev/random. My code uses the default write_bytes for the stdio output, which writes bytes one at a time, so this is expected to be slow
 
 time ./randall 133562368 >/dev/null
 real    1m34.937s

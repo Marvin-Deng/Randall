@@ -3,6 +3,6 @@
 
 #include <stdbool.h>
 
-bool writebytes(unsigned long long x, int nbytes);
+int write_output(long long nbytes, int output, int block_size, unsigned long long rand64());
 
 #endif 

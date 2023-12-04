@@ -103,12 +103,11 @@ void readoptions(int argc, char **argv, struct options *opts)
     if (isPosNumber(argv[optind]))
     {
         long long nbytes = atol(argv[optind]);
-        if (nbytes >= 0)
-        {
-            opts->isvalid = true;
-            opts->nbytes = nbytes;
-        }
-    } else {
+        opts->isvalid = true;
+        opts->nbytes = nbytes;
+    }
+    else
+    {
         fprintf(stderr, "Error: nbytes value is invalid. Nbytes must be a non negative integer\n");
         exit(1);
     }

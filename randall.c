@@ -22,11 +22,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#include <errno.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 
 #include "options.h"
 #include "rand64-hw.h"
@@ -81,9 +78,9 @@ int main(int argc, char **argv)
   }
   else if (opts.input == LDRAND)
   {
-    initialize = hardware_rand64_init;
+    initialize = software_rand64_init;
     rand64 = software_ldrand48;
-    finalize = hardware_rand64_fini;
+    finalize = software_rand64_fini;
   }
   else if (opts.input == SLASH_F)
   {
@@ -99,59 +96,13 @@ int main(int argc, char **argv)
   }
 
   initialize();
-  int wordsize = sizeof rand64();
-  int output_errno = 0;
 
-  if (opts.output == STDIO)
-  {
-    while (0 < nbytes)
-    {
-      unsigned long long x = rand64();
-      int outbytes = nbytes < wordsize ? nbytes : wordsize;
-      if (!writebytes(x, outbytes))
-      {
-        output_errno = errno;
-        break;
-      }
-      nbytes -= outbytes;
-    }
-
-    if (fclose(stdout) != 0)
-      output_errno = errno;
-
-    if (output_errno)
-    {
-      errno = output_errno;
-      perror("output");
-    }
+  int output = 0;
+  if (opts.output == N) {
+    output = 1;
   }
-  else if (opts.output == N)
-  {
-    unsigned int block = opts.block_size * 1000;
-    char *buffer = malloc(block);
-    if (buffer == NULL)
-    {
-      fprintf(stderr, "Error: Buffer cannot be NULL\n");
-      return 1;
-    }
-    while (0 < nbytes)
-    {
-      int curr_block = nbytes < block ? nbytes : block;
-      unsigned long long x;
-      for (int i = 0; i < curr_block; i += sizeof(x))
-      {
-        x = rand64();
-        for (size_t j = 0; j < sizeof(x); j++)
-        {
-          unsigned char byte = *((unsigned char *)&x + j);
-          buffer[i + j] = byte;
-        }
-      }
-      write(1, buffer, curr_block);
-      nbytes -= curr_block;
-    }
-    free(buffer);
-  }
+
+  int output_errno = write_output(nbytes, output, opts.block_size, rand64);
 
   finalize();
   return !!output_errno;
