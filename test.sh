@@ -96,3 +96,12 @@ then echo "P: Return code is 1 for missing 'nbytes' with stdio in ./randall -o s
 else echo "F: Return code is not 1 for missing 'nbytes' with stdio ./randall -o  stdio"; \
 fi
 
+if [ "$(./randall -o 0 100 2> /dev/null; echo $?)" -eq 1 ]; \
+then echo "P: Return code is 1 for block size of 0 in ./randall -o 0 100"; \
+else echo "F: Return code is not 1 for block size of 0 in ./randall -o 0 100"; \
+fi
+
+if [ "$(./randall -o -5 100 2> /dev/null; echo $?)" -eq 1 ]; \
+then echo "P: Return code is 1 for negative block size in ./randall -o -5 100"; \
+else echo "F: Return code is not 1 for negative block size in ./randall -o -5 100"; \
+fi

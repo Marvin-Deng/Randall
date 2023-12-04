@@ -130,11 +130,6 @@ int main(int argc, char **argv)
   }
   else if (opts.output == N)
   {
-    if (opts.block_size == 0)
-    {
-      fprintf(stderr, "Error: Block size cannot be 0\n");
-      return 1;
-    }
     unsigned int block = opts.block_size * 2;
     char *buffer = malloc(block);
     if (buffer == NULL)

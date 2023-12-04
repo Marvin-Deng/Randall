@@ -9,7 +9,7 @@
 
 #include "options.h"
 
-static bool isNumber(char *string)
+static bool isPosNumber(char *string)
 {
     if (*string == '\0')
     {
@@ -26,15 +26,6 @@ static bool isNumber(char *string)
     return true;
 }
 
-static void optargExits(char *optarg)
-{
-    if (optarg == NULL)
-    {
-        fprintf(stderr, "Error: Missing argument for option -i\n");
-        exit(1);
-    }
-}
-
 void readoptions(int argc, char **argv, struct options *opts)
 {
     opts->isvalid = false;
@@ -46,7 +37,6 @@ void readoptions(int argc, char **argv, struct options *opts)
         {
 
         case 'i':
-            optargExits(optarg);
 
             if (strcmp("rdrand", optarg) == 0)
             {
@@ -70,12 +60,17 @@ void readoptions(int argc, char **argv, struct options *opts)
             break;
 
         case 'o':
-            optargExits(optarg);
 
-            if (isNumber(optarg))
+            if (isPosNumber(optarg))
             {
                 opts->output = N;
-                opts->block_size = atoi(optarg);
+                int block_size = atoi(optarg);
+                if (block_size == 0)
+                {
+                    fprintf(stderr, "Error: Block size cannot be 0\n");
+                    exit(1);
+                }
+                opts->block_size = block_size;
             }
             else if (strcmp("stdio", optarg) == 0)
             {
