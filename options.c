@@ -51,7 +51,8 @@ void readoptions(int argc, char **argv, struct options *opts)
             }
             else
             {
-                fprintf(stderr, "Error: Invalid input format. Expected rdrand, ldrand48_r, or a file path as arguments\n");
+                fprintf(stderr, "Error: Invalid input format. Expected rdrand, ldrand48_r,"
+                                "or a file path as arguments\n");
                 exit(1);
             }
             opts->isvalid = true;
@@ -76,7 +77,8 @@ void readoptions(int argc, char **argv, struct options *opts)
             }
             else
             {
-                fprintf(stderr, "Error: Invalid output format. Expected a positve integer or stdio as arguments\n");
+                fprintf(stderr, "Error: Invalid output format. Expected a positve integer or"
+                                "stdio as arguments\n");
                 exit(1);
             }
             opts->isvalid = true;
@@ -95,7 +97,8 @@ void readoptions(int argc, char **argv, struct options *opts)
     // Input finsihed parsing without reaching an nbytes value
     if (optind >= argc)
     {
-        fprintf(stderr, "Error: Insufficient command-line arguments. Please include the required 'nbytes' value.\n");
+        fprintf(stderr, "Error: Insufficient command-line arguments."
+                        "Please include the required 'nbytes' value.\n");
         exit(1);
     }
 

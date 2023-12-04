@@ -37,9 +37,9 @@ then echo "P: Test -o N on ./randall -o 10 100"; \
 else echo "F: Test -o N on ./randall -o 10 100"; \
 fi
 
-if [ `./randall -i /dev/random 30 -o 10 100 | wc -c` -eq 30  ]; \
-then echo "P: Test -i and -o N on -i /dev/random 30 -o 10 100"; \
-else echo "F: Test -i and -o N on -i /dev/random 30 -o 10 100"; \
+if [ `./randall -i /dev/random -o 10 100 | wc -c` -eq 100  ]; \
+then echo "P: Test -i and -o N on -i /dev/random -o 10 100"; \
+else echo "F: Test -i and -o N on -i /dev/random -o 10 100"; \
 fi
 
 if [ `./randall -i /dev/random 30 -o stdio | wc -c` -eq 30  ]; \

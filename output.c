@@ -4,8 +4,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
+#include <string.h>
 
 #include "output.h"
+#include "options.h"
 
 static bool write_bytes(unsigned long long x, int nbytes)
 {
@@ -20,10 +22,11 @@ static bool write_bytes(unsigned long long x, int nbytes)
     return true;
 }
 
+
 int write_output(long long nbytes, int output, int block_size, unsigned long long rand64())
 {
 
-    int wordsize = sizeof rand64();
+    int wordsize = (sizeof rand64()) / 2;
     int output_errno = 0;
 
     if (output == 0)
@@ -31,6 +34,7 @@ int write_output(long long nbytes, int output, int block_size, unsigned long lon
         while (0 < nbytes)
         {
             unsigned long long x = rand64();
+
             int outbytes = nbytes < wordsize ? nbytes : wordsize;
             if (!write_bytes(x, outbytes))
             {
@@ -60,9 +64,10 @@ int write_output(long long nbytes, int output, int block_size, unsigned long lon
         }
         while (0 < nbytes)
         {
-            int curr_block = nbytes < block ? nbytes : block;
+            int outbytes = nbytes < block ? nbytes : block;
             unsigned long long x;
-            for (int i = 0; i < curr_block; i += sizeof(x))
+
+            for (int i = 0; i < outbytes; i += sizeof(x))
             {
                 x = rand64();
                 for (size_t j = 0; j < sizeof(x); j++)
@@ -71,8 +76,8 @@ int write_output(long long nbytes, int output, int block_size, unsigned long lon
                     buffer[i + j] = byte;
                 }
             }
-            write(1, buffer, curr_block);
-            nbytes -= curr_block;
+            write(1, buffer, outbytes);
+            nbytes -= outbytes;
         }
         free(buffer);
     }
