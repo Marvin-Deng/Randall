@@ -3,10 +3,6 @@
 
 #include <stdbool.h>
 
-struct cpuid;
-
-struct cpuid cpuid(unsigned int leaf, unsigned int subleaf);
-
 _Bool rdrand_supported(void);
 
 void hardware_rand64_init(void);

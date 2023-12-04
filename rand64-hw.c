@@ -11,8 +11,8 @@ struct cpuid
   unsigned eax, ebx, ecx, edx;
 };
 
-/* Return information about the CPU.  See <http://wiki.osdev.org/CPUID>.  */
-struct cpuid cpuid(unsigned int leaf, unsigned int subleaf)
+/* Return information about the CPU.  See <http://wiki.osdev.org/CPUID>. */
+static struct cpuid cpuid(unsigned int leaf, unsigned int subleaf)
 {
   struct cpuid result;
   asm("cpuid"
