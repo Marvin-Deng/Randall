@@ -42,7 +42,7 @@ void readoptions(int argc, char **argv, struct options *opts)
             }
             else if (strcmp("ldrand48_r", optarg) == 0)
             {
-                opts->input = LRAND;
+                opts->input = LDRAND;
             }
             else if ('/' == optarg[0])
             {
@@ -81,13 +81,13 @@ void readoptions(int argc, char **argv, struct options *opts)
             }
             opts->isvalid = true;
             break;
-        
+
         case ':':
-            fprintf (stderr, "Error: Option -%c requires an operand\n", optopt);
+            fprintf(stderr, "Error: Option -%c requires an operand\n", optopt);
             exit(1);
 
         case '?':
-            fprintf (stderr, "Error: Invalid option: '-%c'\n", optopt);
+            fprintf(stderr, "Error: Invalid option: '-%c'\n", optopt);
             exit(1);
         }
     }
@@ -100,9 +100,16 @@ void readoptions(int argc, char **argv, struct options *opts)
     }
 
     // Gets the number of bytes at then end of the input
-    opts->nbytes = atol(argv[optind]);
-    if (opts->nbytes >= 0)
+    if (isPosNumber(argv[optind]))
     {
-        opts->isvalid = true;
+        long long nbytes = atol(argv[optind]);
+        if (nbytes >= 0)
+        {
+            opts->isvalid = true;
+            opts->nbytes = nbytes;
+        }
+    } else {
+        fprintf(stderr, "Error: nbytes value is invalid. Nbytes must be a non negative integer\n");
+        exit(1);
     }
 }

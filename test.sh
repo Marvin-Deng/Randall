@@ -54,6 +54,11 @@ then echo "P: Return code is 1 for missing nbytes in ./randall"; \
 else echo "F: Return code is not 1 for missing nbytes in ./randall"; \
 fi
 
+if [ "$(./randall dsfds 2> /dev/null; echo $?)" -eq 1 ]; \
+then echo "P: Return code is 1 for non integer nbytes in ./randall dsfds"; \
+else echo "F: Return code is not 1 for non integer nbytes in ./randall dsfds"; \
+fi
+
 if [ "$(./randall -dsfs 3 2> /dev/null; echo $?)" -eq 1 ]; \
 then echo "P: Return code is 1 for invalid option in ./randall -dsfs"; \
 else echo "F: Return code is not 1 for invalid option in ./randall -dsfs"; \

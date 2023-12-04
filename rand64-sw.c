@@ -35,7 +35,7 @@ unsigned long long software_rand64(void)
 
 struct drand48_data drand_data;
 
-unsigned long long software_lrand48(void)
+unsigned long long software_ldrand48(void)
 {
   long int result;
   lrand48_r(&drand_data, &result);

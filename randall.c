@@ -79,10 +79,10 @@ int main(int argc, char **argv)
       return 1;
     }
   }
-  else if (opts.input == LRAND)
+  else if (opts.input == LDRAND)
   {
     initialize = hardware_rand64_init;
-    rand64 = software_lrand48;
+    rand64 = software_ldrand48;
     finalize = hardware_rand64_fini;
   }
   else if (opts.input == SLASH_F)
@@ -127,7 +127,7 @@ int main(int argc, char **argv)
   }
   else if (opts.output == N)
   {
-    unsigned int block = opts.block_size * 2;
+    unsigned int block = opts.block_size * 1000;
     char *buffer = malloc(block);
     if (buffer == NULL)
     {
