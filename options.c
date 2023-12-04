@@ -1,9 +1,7 @@
-#include <errno.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <cpuid.h>
 #include <string.h>
 #include <ctype.h>
 
