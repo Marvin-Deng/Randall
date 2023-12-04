@@ -22,6 +22,7 @@ lrand
 - Added lrand option to options.c and the struct
 - Added lrand randomization function to rand64-sw.c 
 - Added lrand option to randall.c to use the lrand randomization
+- Used valgrind to debug seg fault
 
 /F option
 - In options.c, added a source path to the struct when a / is encountered

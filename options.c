@@ -40,9 +40,9 @@ void readoptions(int argc, char **argv, struct options *opts)
             {
                 opts->input = RDRAND;
             }
-            else if (strcmp("ldrand48_r", optarg) == 0)
+            else if (strcmp("lrand48_r", optarg) == 0)
             {
-                opts->input = LDRAND;
+                opts->input = LRAND;
             }
             else if ('/' == optarg[0])
             {

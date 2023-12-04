@@ -17,9 +17,9 @@ then echo "P: rdrand test on ./randall -i rdrand 10"; \
 else echo "F: rdrand test on ./randall -i rdrand 10"; \
 fi
 
-if [ `./randall -i ldrand48_r 10 | wc -c` -eq 10 ]; \
-then echo "P: ldrand48_r test on ./randall -i ldrand48_r 10"; \
-else echo "F: ldrand48_r test on ./randall -i ldrand48_r 10"; \
+if [ `./randall -i lrand48_r 10 | wc -c` -eq 10 ]; \
+then echo "P: lrand48_r test on ./randall -i lrand48_r 10"; \
+else echo "F: lrand48_r test on ./randall -i lrand48_r 10"; \
 fi
 
 if [ `./randall -i /dev/random 30 | wc -c` -eq 30 ]; \
@@ -74,9 +74,9 @@ then echo "P: Return code is 1 for ./randall -i invalid_input_option 4"; \
 else echo "F: Return code is not 1 for ./randall -i invalid_input_option 4"; \
 fi
 
-if [ "$(./randall -i ldrand48_r 2> /dev/null; echo $?)" -eq 1 ]; \
-then echo "P: Return code is 1 for missing nbytes in ./randall -i ldrand48_r"; \
-else echo "F: Return code is not 1 for missing nbytes in ./randall -i ldrand48_r"; \
+if [ "$(./randall -i lrand48_r 2> /dev/null; echo $?)" -eq 1 ]; \
+then echo "P: Return code is 1 for missing nbytes in ./randall -i lrand48_r"; \
+else echo "F: Return code is not 1 for missing nbytes in ./randall -i lrand48_r"; \
 fi
 
 if [ "$(./randall -i /dev/random 2> /dev/null; echo $?)" -eq 1 ]; \

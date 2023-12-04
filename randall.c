@@ -76,11 +76,11 @@ int main(int argc, char **argv)
       return 1;
     }
   }
-  else if (opts.input == LDRAND)
+  else if (opts.input == LRAND)
   {
-    initialize = software_rand64_init;
-    rand64 = software_ldrand48;
-    finalize = software_rand64_fini;
+    initialize = software_lrand48_init;
+    rand64 = software_lrand48;
+    finalize = software_lrand48_fini;
   }
   else if (opts.input == SLASH_F)
   {

@@ -5,7 +5,7 @@ enum Input
 {
     NONE,
     RDRAND,
-    LDRAND,
+    LRAND,
     SLASH_F
 };
 enum Ouput

@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "rand64-sw.h"
+
+static struct drand48_data drand_data;
 
 /* Input stream containing random bytes.  */
 static FILE *urandstream;
 
-/* Initialize the software implentation on a file  */
+/* Initialize the software implementation on a file  */
 void initfile(char *file)
 {
   urandstream = fopen(file, "r");
@@ -33,17 +36,27 @@ unsigned long long software_rand64(void)
   return x;
 }
 
-struct drand48_data drand_data;
+/* Finalize the software rand64 implementation.  */
+void software_rand64_fini(void)
+{
+  fclose(urandstream);
+}
 
-unsigned long long software_ldrand48(void)
+/* Initialize the software ldrand48 implementation.  */
+void software_lrand48_init(void)
+{
+  srand48_r(time(NULL), &drand_data);
+}
+
+/* Return a random value, using ldrand48_r().  */
+unsigned long long software_lrand48(void)
 {
   long int result;
   lrand48_r(&drand_data, &result);
   return (unsigned long long)result;
 }
 
-/* Finalize the software rand64 implementation.  */
-void software_rand64_fini(void)
+/* Finalize the software ldrand48_r() implementation.  */
+void software_lrand48_fini(void)
 {
-  fclose(urandstream);
 }
