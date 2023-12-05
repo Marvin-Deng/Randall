@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 
-int write_output(long long nbytes, int output, int block_size, unsigned long long rand64());
+int write_output(long long nbytes, int output, int block_size, 
+                unsigned long long rand64() , bool isLrand);
 
 #endif 

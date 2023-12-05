@@ -22,11 +22,15 @@ static bool write_bytes(unsigned long long x, int nbytes)
     return true;
 }
 
-
-int write_output(long long nbytes, int output, int block_size, unsigned long long rand64())
+int write_output(long long nbytes, int output, int block_size,
+                 unsigned long long rand64(), bool isLrand)
 {
 
-    int wordsize = (sizeof rand64()) / 2;
+    int wordsize = sizeof rand64();
+    if (isLrand)
+    {
+        wordsize /= 2;
+    }
     int output_errno = 0;
 
     if (output == 0)

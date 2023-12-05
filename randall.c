@@ -39,6 +39,7 @@ int main(int argc, char **argv)
 
   readoptions(argc, argv, &opts);
   long long nbytes = opts.nbytes;
+  bool isLrand = false;
 
   // Check if the input is valid
   if (!opts.isvalid)
@@ -81,6 +82,7 @@ int main(int argc, char **argv)
     initialize = software_lrand48_init;
     rand64 = software_lrand48;
     finalize = software_lrand48_fini;
+    isLrand = true;
   }
   else if (opts.input == SLASH_F)
   {
@@ -98,11 +100,12 @@ int main(int argc, char **argv)
   initialize();
 
   int output = 0;
-  if (opts.output == N) {
+  if (opts.output == N)
+  {
     output = 1;
   }
 
-  int output_errno = write_output(nbytes, output, opts.block_size, rand64);
+  int output_errno = write_output(nbytes, output, opts.block_size, rand64, isLrand);
 
   finalize();
   return !!output_errno;

@@ -79,7 +79,9 @@ user    0m0.931s
 sys     0m1.040s
 
 Slow using /dev/random. My code uses the default write_bytes for the stdio output, 
-which writes bytes one at a time, so this is expected to be slow
+which writes bytes one at a time, so this is expected to be slow. Running this
+on the server also may have caused slower results, but my implementation 
+should be optimal.
 
 time ./randall 133562368 >/dev/null
 real    1m34.937s
