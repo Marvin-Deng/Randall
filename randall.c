@@ -41,7 +41,6 @@ int main(int argc, char **argv)
   long long nbytes = opts.nbytes;
   bool isLrand = false;
 
-  // Check if the input is valid
   if (!opts.isvalid)
   {
     fprintf(stderr, "Error: Invalid input \n");
@@ -57,13 +56,7 @@ int main(int argc, char **argv)
   unsigned long long (*rand64)(void);
   void (*finalize)(void);
 
-  if (opts.input == NONE)
-  {
-    initialize = software_rand64_init;
-    rand64 = software_rand64;
-    finalize = software_rand64_fini;
-  }
-  else if (opts.input == RDRAND)
+  if (opts.input == NONE || opts.input == RDRAND)
   {
     if (rdrand_supported())
     {

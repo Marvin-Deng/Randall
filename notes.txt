@@ -46,13 +46,13 @@ Stdio
 - Added the default stdio option to options.c for the output
 
 N option
-- Added a function called isNumber to verify the input is a number 
+- Added a function called isPosNumber to verify the input is a positive number 
 - Added block_size field to the struct to hold the block size for the N option
 - I allocated a buffer, then populated the buffer with bytes of the random 
 long longs from rand64()
 
 Preparing for submission
-- Updated makefile wiht additional files for submission
+- Updated makefile with additional files for submission
 
 Test runs on lnxsrv15
 
@@ -78,24 +78,21 @@ real    0m2.043s
 user    0m0.931s
 sys     0m1.040s
 
-Slow using /dev/random. My code uses the default write_bytes for the stdio output, 
-which writes bytes one at a time, so this is expected to be slow. Running this
-on the server also may have caused slower results, but my implementation 
-should be optimal.
+Slow using /dev/random. 
 
 time ./randall 133562368 >/dev/null
-real    1m34.937s
-user    0m2.132s
-sys     1m7.126s
+real    0m3.304s
+user    0m3.230s
+sys     0m0.034s
 
 time ./randall 133562368 | cat >/dev/null
-real    1m30.358s
-user    0m2.132s
-sys     1m7.119s
+real    0m3.318s
+user    0m3.178s
+sys     0m0.276s
 
 time ./randall 133562368 >rand.data
-real    1m34.859s
-user    0m1.876s
-sys     1m7.024s
+real    0m3.774s
+user    0m2.984s
+sys     0m0.454s
 
 
