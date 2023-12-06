@@ -7,7 +7,6 @@
 #include <string.h>
 
 #include "output.h"
-#include "options.h"
 
 static bool write_bytes(unsigned long long x, int nbytes)
 {
